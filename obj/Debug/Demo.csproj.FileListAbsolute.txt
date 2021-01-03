@@ -1,0 +1,10 @@
+D:\My Warehouse\My Mode\Demo\bin\Debug\Demo.exe.config
+D:\My Warehouse\My Mode\Demo\bin\Debug\Demo.exe
+D:\My Warehouse\My Mode\Demo\bin\Debug\Demo.pdb
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.csprojAssemblyReference.cache
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.Form1.resources
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.Properties.Resources.resources
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.csproj.GenerateResource.cache
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.csproj.CoreCompileInputs.cache
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.exe
+D:\My Warehouse\My Mode\Demo\obj\Debug\Demo.pdb
