@@ -115,11 +115,21 @@ namespace Demo
             String InputString; // 存储输入字符串
             int count = 0;
             String str1;
+            StreamReader Str;
 
-
-            StreamReader Str = new StreamReader(fName, Encoding.Default); // 创建一个StreamReader 的实例来读取文件
+            if (checkBox1.Checked == true)
+            {
+                Str = new StreamReader(fName, Encoding.UTF8); // 创建一个StreamReader 的实例来读取文件
+            }
+            else
+            {
+                Str = new StreamReader(fName, Encoding.Default); // 创建一个StreamReader 的实例来读取文件
+            }
+                
             InputString = textBox2.Text; // 获取输入字符串
+
             str1 = Str.ReadToEnd(); // 读取文件中数据
+
 
             String[] sArray = InputString.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
@@ -143,6 +153,51 @@ namespace Demo
         private void Button2_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+       
+        private void button3_Click(object sender, EventArgs e)
+        {
+            String InputStr = textBox3.Text;
+            Byte[] buff = System.Text.Encoding.Default.GetBytes(InputStr);
+            String OutputStr = "";
+
+            for (int i= 0; i < buff.Length; i++)
+            {
+                OutputStr += buff[i].ToString("X2");
+            }
+
+            richTextBox1.AppendText(OutputStr + "\r\n"); // 显示数据
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            String Inputstr;
+            Inputstr = textBox3.Text;
+            byte[] buff = new byte[Inputstr.Length / 2];
+            int index = 0;
+
+            for (int i = 0; i < Inputstr.Length; i += 2)
+            {
+                buff[index] = Convert.ToByte(Inputstr.Substring(i, 2), 16);
+                index++;
+            }
+
+            String OutputStr = Encoding.Default.GetString(buff);
+
+            richTextBox1.AppendText(OutputStr + "\r\n"); // 显示数据
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            String Inputstr = textBox3.Text;
+            int index = Inputstr.Length/2;
+
+            richTextBox1.AppendText(index + "\r\n"); // 显示数据
         }
     }
 }
