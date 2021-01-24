@@ -10,14 +10,25 @@ using System.IO;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
+
 namespace Demo
 {
     public partial class Form1 : Form
     {
         String fName; // 存储打开文件路径
+        MysqlConnector mc = new MysqlConnector(); // 实例化连接对象
+
         public Form1()
         {
             InitializeComponent();
+
+            // 设置数据库连接参数
+            mc.SetServer("127.0.0.1")
+                .SetDataBase("success_rate")
+                .SetUserID("root")
+                .SetPassword("wangzijian")
+                .SetPort("3306")
+                .SetCharset("utf-8");
         }
 
         //
@@ -109,25 +120,46 @@ namespace Demo
 
         }
 
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            //String str = "insert into DongBa(request,para_error,getsecure_rq,nofind_plate,notypeIC_card,ICblack,IClowmoney,pay_fail,trade_timeout,trade_success,success_rate) values(1,2,3,4,5,6,7,8,9,10,90.0)";
+            string newTableCMD = "CREATE TABLE bases(id INT(11), basename INT(11), category INT(11))";
+
+            mc.MySql_operating(newTableCMD);
+        }
+
         // 统计按钮监听事件
         private void Button1_Click_1(object sender, EventArgs e)
         {
             String InputString; // 存储输入字符串
-            int count = 0;
-            String str1;
-
+            int count = 0; // 计算参数在文件中出现的次数
+            String str1; // 存储文件中的数据
+            int index = 0;
 
             StreamReader Str = new StreamReader(fName, Encoding.Default); // 创建一个StreamReader 的实例来读取文件
             InputString = textBox2.Text; // 获取输入字符串
             str1 = Str.ReadToEnd(); // 读取文件中数据
 
-            String[] sArray = InputString.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            String[] sArray = InputString.Split(new string[] { "\r\n" }, StringSplitOptions.None); // 分割查询参数
+
+            int[] para_count = new int[sArray.Length]; // 存储查询参数个数
 
             foreach (string i in sArray)
             {
                 count = CalauteStringShowCount_For(str1, @i.ToString()); // 计算字符串出现次数
+                para_count[index++] = count;
                 richTextBox1.AppendText(i.ToString() + ":" + count.ToString() + "\r\n"); // 显示数据
             }
+                     
+            String str = "insert into DongBa(request,para_error,getsecure_rq,nofind_plate,notypeIC_card,ICblack," +
+                "IClowmoney,pay_fail,trade_timeout,trade_success,success_rate) " +
+                "values("+para_count[0]+ "," + para_count[1] + ", " + para_count[2] + "," +
+                " " + para_count[3] + ", " + para_count[4] + ", " + para_count[5] + "," + 
+                para_count[6] + ", " + para_count[7] + ", " + para_count[8] + ", " + 
+                para_count[9] + ", " + para_count[10] + ")";
+
+
+            mc.MySql_operating(str);
         }
 
         private void Label1_Click(object sender, EventArgs e)
@@ -144,5 +176,6 @@ namespace Demo
         {
             richTextBox1.Clear();
         }
+
     }
 }
